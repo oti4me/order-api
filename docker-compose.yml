@@ -1,0 +1,19 @@
+version: '3'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: ./.cloud/docker/Dockerfile
+    container_name: order_api
+    environment:
+      DB_CONNECTION: '${DB_CONNECTION}'
+    ports:
+    - "${APP_DOCKER_PORT:-8081}:3001"
+    volumes:
+      - '.:/usr/src/app'
+    networks:
+      - order
+
+networks:
+  order:
+    driver: bridge

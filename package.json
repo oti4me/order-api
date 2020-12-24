@@ -10,16 +10,22 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
+    "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/node": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/register": "^7.12.10",
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "supertest": "^6.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js",
-    "dev": "NODE_ENV=development nodemon ./src/server.js --watch ./src --exec babel-node"
+    "test": "mocha --exit",
+    "start": "node dist/server.js",
+    "dev": "NODE_ENV=development nodemon ./src/server.js --watch ./src --exec babel-node",
+    "build": "babel src -d dist"
   },
   "keywords": [],
   "author": "",
