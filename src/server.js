@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { json, urlencoded } from 'express';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
 import cors from 'cors';
@@ -12,8 +12,8 @@ dotenv.config();
 
 app.disable('x-powered-by');
 app.use(
-  express.json(),
-  express.urlencoded({ extended: false }),
+  json(),
+  urlencoded({ extended: false }),
   morgan('dev'),
   cors()
 );
