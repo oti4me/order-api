@@ -1,0 +1,15 @@
+import { StatusCodes, getReasonPhrase } from 'http-status-codes';
+
+export class Conflict extends Error {
+  /**
+   * Constructor for Conflict
+   *
+   * @param message
+   */
+  constructor(message) {
+    super(message);
+    const { CONFLICT } = StatusCodes;
+    this.name = getReasonPhrase(CONFLICT);
+    this.statusCode = CONFLICT;
+  }
+}
