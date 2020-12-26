@@ -70,6 +70,33 @@ export class OrderRepository {
       return [null, error];
     }
   }
+
+  /**
+   * Update order with the provided ID on the collection
+   *
+   * @param {string} orderId
+   *
+   * @returns {object} error object on failure or returns order object on success
+   */
+  async updateOrder({ params, body }) {
+    try {
+      const orderRef = await this.db
+        .collection('orders')
+        .doc(params.id)
+
+      const doc = await orderRef.get();
+
+      if(!doc.data()) {
+        return [null, new NotFound(`Order with id '${params.id}' not found`)];
+      }
+
+      await orderRef.update(body);
+
+      return [{ ...doc.data(), ...body }, null];
+    } catch (error) {
+      return [null, error];
+    }
+  }
 }
 
 export default new OrderRepository();

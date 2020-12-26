@@ -22,7 +22,7 @@ describe('GET: /api/v1', () => {
       .expect(404)
       .end((err, { body }) => {
         if (err) return done(err);
-        expect(body.message).to.equal('Not Found');
+        expect(body.message).to.equal('Not Found - /api/v1/notfound');
         done();
       });
   });
