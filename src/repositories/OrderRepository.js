@@ -1,5 +1,5 @@
-import {firebase} from '../config/firebase';
-import {NotFound} from '../utils/errors/NotFound'
+import { db } from '../config/firebase';
+import { NotFound } from '../utils/errors/NotFound'
 
 export class OrderRepository {
   /**
@@ -7,9 +7,7 @@ export class OrderRepository {
    *
    * @memberOf OrderRepository
    */
-  constructor() {
-    this.db = firebase.firestore();
-  }
+  constructor() {}
 
   /**
    * Get all order in the collection
@@ -18,7 +16,7 @@ export class OrderRepository {
    */
   async getAll() {
     try {
-      const ordersRef = await this.db
+      const ordersRef = await db
         .collection('orders')
         .get();
       const orders = ordersRef.docs.map(order => order.data());
@@ -124,7 +122,7 @@ export class OrderRepository {
    * @return {Promise<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>}
    */
    async getOrderDoc(orderID) {
-    return this.db
+    return db
       .collection('orders')
       .doc(orderID);
   }
