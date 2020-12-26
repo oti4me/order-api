@@ -1,18 +1,6 @@
 import { StatusCodes } from 'http-status-codes';
 
-const { CREATED, OK } = StatusCodes;
-
-/**
- * Returns a json response with status code 201 and a response body
- *
- * @param {any} res
- * @param {any} body
- *
- * @return Response
- */
-export const created = (res, body = {}) => {
-  return res.status(CREATED).json(body);
-};
+const { OK } = StatusCodes;
 
 /**
  * Returns a json response with status code 200 and a response body
