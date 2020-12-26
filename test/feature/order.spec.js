@@ -76,4 +76,35 @@ describe('Orders Controller: /api/v1/orders', () => {
       }
     });
   });
+  describe('Orders PUT: /api/v1/orders/:id', () => {
+    const updateValue = {
+      title: 'another title',
+      bookingDate: '1554284950002,'
+    }
+    it('should return a 200 success status and an object of the provided ID', async () => {
+      try {
+        const { body } = await request
+          .put(`/api/v1/orders/${order.uid}`)
+          .send(updateValue)
+          .expect(200);
+
+        expect(body.title).to.equal(updateValue.title);
+        expect(body.bookingDate).to.equal(updateValue.bookingDate);
+      } catch (error) {
+        throw error
+      }
+    });
+    it('should return a 404 if the provided ID does not match an order ID in the collection', async () => {
+      try {
+        const { body } = await request
+          .put(`/api/v1/orders/thisisaninvalidorderid`)
+          .send(updateValue)
+          .expect(404);
+
+        expect(body.message).to.equal(`Order with id 'thisisaninvalidorderid' not found`);
+      } catch (error) {
+        throw error
+      }
+    });
+  });
 });

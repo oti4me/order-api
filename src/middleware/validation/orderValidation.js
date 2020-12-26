@@ -36,4 +36,33 @@ export const orderValidation = {
       .notEmpty()
       .withMessage('Address is required'),
   ],
+
+  /**
+   * Checks for validation result, returns next if successful
+   *
+   * @param {Request} req
+   * @param {Response} res
+   * @param next
+   *
+   * @returns next
+   */
+  updateValidationResult: (req, res, next) => {
+    const { title, bookingDate } = req.body;
+    const result = validationResult(req);
+
+    if (!result.isEmpty()) return next(new Validation(result.array()));
+
+    req.body = { title, bookingDate }
+
+    return next();
+  },
+
+  updateValidator: [
+    check('title')
+      .isLength({ min: 3, max: 32 })
+      .withMessage('Title must be between 3 and 32 chars'),
+    check('bookingDate')
+      .isLength({ min: 10, max: 15 })
+      .withMessage('Invalid booking date')
+  ],
 };

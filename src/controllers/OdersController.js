@@ -56,4 +56,20 @@ export class OrdersController {
 
     ok(response, { ...order });
   }
+
+  /**
+   * Update order with the provided ID
+   *
+   * @param {object} request HTTP request object
+   * @param {object} response HTTP response object
+   * @param next
+   *
+   * @returns {object} error object on failure or returns order object on success
+   */
+  async update(request, response, next) {
+    const [order, error] = await orderRepo.updateOrder(request);
+    if(error) return next(error);
+
+    ok(response, { ...order });
+  }
 }
