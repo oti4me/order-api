@@ -10,7 +10,7 @@ export class OrdersController {
   constructor() {}
 
   /**
-   * Get all order in the collection
+   * Gets all orders in the collection
    *
    * @param {object} request HTTP request object
    * @param {object} response HTTP response object
@@ -26,7 +26,7 @@ export class OrdersController {
   }
 
   /**
-   * Add order to the collection
+   * Adds an order to the collection
    *
    * @param {object} request HTTP request object
    * @param {object} response HTTP response object
@@ -42,7 +42,7 @@ export class OrdersController {
   }
 
   /**
-   * Add order to the collection
+   * Gets an order by id
    *
    * @param {object} request HTTP request object
    * @param {object} response HTTP response object
@@ -58,7 +58,7 @@ export class OrdersController {
   }
 
   /**
-   * Update order with the provided ID
+   * Updates order with the provided ID
    *
    * @param {object} request HTTP request object
    * @param {object} response HTTP response object
@@ -68,6 +68,22 @@ export class OrdersController {
    */
   async update(request, response, next) {
     const [order, error] = await orderRepo.updateOrder(request);
+    if(error) return next(error);
+
+    ok(response, { ...order });
+  }
+
+  /**
+   * Deletes order with the provided ID
+   *
+   * @param {object} request HTTP request object
+   * @param {object} response HTTP response object
+   * @param next
+   *
+   * @returns {object} error object on failure or returns order object on success
+   */
+  async delete({ params }, response, next) {
+    const [order, error] = await orderRepo.deleteOrder(params.id);
     if(error) return next(error);
 
     ok(response, { ...order });

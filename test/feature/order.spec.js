@@ -106,5 +106,42 @@ describe('Orders Controller: /api/v1/orders', () => {
         throw error
       }
     });
+    it('should return a 422 error for missing required field', async () => {
+      try {
+        const { body } = await request
+          .put(`/api/v1/orders/${order.uid}`)
+          .send({ ...order, title: ''})
+          .expect(422);
+
+        expect(body.message).to.equal('Request validation failed');
+        expect(body.body[0].msg).to.equal('Title must be between 3 and 32 chars');
+      } catch (error) {
+        throw error
+      }
+    });
+  });
+  describe('Orders DELETE: /api/v1/orders/:id', () => {
+    it('should return a 200 success status on delete of the order with the provided ID', async () => {
+      try {
+        const { body } = await request
+          .delete(`/api/v1/orders/${order.uid}`)
+          .expect(200);
+
+        expect(body.orderId).to.equal(order.uid);
+      } catch (error) {
+        throw error
+      }
+    });
+    it('should return a 404 if the provided ID does not match an order ID in the collection', async () => {
+      try {
+        const { body } = await request
+          .delete(`/api/v1/orders/${order.uid}`)
+          .expect(404);
+
+        expect(body.message).to.equal(`Order with id '${order.uid}' not found`);
+      } catch (error) {
+        throw error
+      }
+    });
   });
 });
