@@ -50,4 +50,30 @@ describe('Orders Controller: /api/v1/orders', () => {
       }
     });
   });
+  describe('Orders GET: /api/v1/orders/:id', () => {
+    it('should return a 200 success status and an object of the provided ID', async () => {
+      try {
+        const { body } = await request
+          .get(`/api/v1/orders/${order.uid}`)
+          .expect(200);
+
+        expect(body.uid).to.equal(order.uid);
+        expect(body.bookingDate).to.equal(order.bookingDate);
+        expect(body.title).to.equal(order.title);
+      } catch (error) {
+        throw error
+      }
+    });
+    it('should return a 404 if the provided ID does not match an order ID in the collection', async () => {
+      try {
+        const { body } = await request
+          .get(`/api/v1/orders/thisisaninvalidorderid`)
+          .expect(404);
+
+        expect(body.message).to.equal(`Order with id 'thisisaninvalidorderid' not found`);
+      } catch (error) {
+        throw error
+      }
+    });
+  });
 });

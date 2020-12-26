@@ -7,7 +7,7 @@ const router = Router();
 
 router.use('/orders', order);
 
-router.use('/', async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   ok(res, {
     message: 'Welcome to the API for this great app.',
   });

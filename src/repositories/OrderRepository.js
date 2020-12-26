@@ -1,4 +1,5 @@
 import { firebase } from '../config/firebase';
+import { NotFound } from '../utils/errors/NotFound'
 
 export class OrderRepository {
   /**
@@ -41,6 +42,30 @@ export class OrderRepository {
         .set(reqBody);
 
       return [reqBody, null];
+    } catch (error) {
+      return [null, error];
+    }
+  }
+
+  /**
+   * Gets an order by from the collection
+   *
+   * @param {string} orderId
+   *
+   * @returns {object} error object on failure or returns order object on success
+   */
+  async getOne(orderId) {
+    try {
+      const order = await this.db
+        .collection('orders')
+        .doc(orderId)
+        .get()
+
+      if(!order.data()) {
+        return [null, new NotFound(`Order with id '${orderId}' not found`)];
+      }
+
+      return [order.data(), null];
     } catch (error) {
       return [null, error];
     }

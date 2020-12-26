@@ -40,4 +40,20 @@ export class OrdersController {
 
     created(response, { ...order });
   }
+
+  /**
+   * Add order to the collection
+   *
+   * @param {object} request HTTP request object
+   * @param {object} response HTTP response object
+   * @param next
+   *
+   * @returns {object} error object on failure or returns order object on success
+   */
+  async one(request, response, next) {
+    const [order, error] = await orderRepo.getOne(request.params.id);
+    if(error) return next(error);
+
+    ok(response, { ...order });
+  }
 }
