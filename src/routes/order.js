@@ -14,5 +14,6 @@ router.put('/:id',
   orderValidation.updateValidator,
   orderValidation.updateValidationResult,
   ordersController.update.bind(OrdersController));
+router.delete('/:id', ordersController.delete.bind(OrdersController));
 
 export default router;
