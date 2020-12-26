@@ -9,5 +9,6 @@ router.post('/',
   orderValidation.createValidationResult,
   ordersController.add.bind(OrdersController))
 router.get('/', ordersController.all.bind(OrdersController))
+router.get('/:id', ordersController.one.bind(OrdersController))
 
 export default router;

@@ -15,4 +15,15 @@ describe('GET: /api/v1', () => {
         done();
       });
   });
+
+  it('should return a 404 for non-existing routes', (done) => {
+    request
+      .get('/api/v1/notfound')
+      .expect(404)
+      .end((err, { body }) => {
+        if (err) return done(err);
+        expect(body.message).to.equal('Not Found');
+        done();
+      });
+  });
 });
