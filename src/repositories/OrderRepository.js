@@ -1,14 +1,7 @@
 import { db } from '../config/firebase';
-import { NotFound } from '../utils/errors/NotFound'
+import NotFound from '../utils/errors/NotFound';
 
 export class OrderRepository {
-  /**
-   * Creates an instance of OrderRepository.
-   *
-   * @memberOf OrderRepository
-   */
-  constructor() {}
-
   /**
    * Get all order in the collection
    *
@@ -19,7 +12,7 @@ export class OrderRepository {
       const ordersRef = await db
         .collection('orders')
         .get();
-      const orders = ordersRef.docs.map(order => order.data());
+      const orders = ordersRef.docs.map((order) => order.data());
 
       return [orders, null];
     } catch (error) {
@@ -55,9 +48,9 @@ export class OrderRepository {
   async getOne(orderId) {
     try {
       const orderRef = await this.getOrderDoc(orderId);
-      const order = await orderRef.get()
+      const order = await orderRef.get();
 
-      if(!order.data()) {
+      if (!order.data()) {
         return [null, new NotFound(`Order with id '${orderId}' not found`)];
       }
 
@@ -79,7 +72,7 @@ export class OrderRepository {
       const orderRef = await this.getOrderDoc(params.id);
       const order = await orderRef.get();
 
-      if(!order.data()) {
+      if (!order.data()) {
         return [null, new NotFound(`Order with id '${params.id}' not found`)];
       }
 
@@ -103,7 +96,7 @@ export class OrderRepository {
       const orderRef = await this.getOrderDoc(orderID);
       const order = await orderRef.get();
 
-      if(!order.data()) {
+      if (!order.data()) {
         return [null, new NotFound(`Order with id '${orderID}' not found`)];
       }
 
@@ -121,7 +114,7 @@ export class OrderRepository {
    * @param orderID
    * @return {Promise<FirebaseFirestore.DocumentReference<FirebaseFirestore.DocumentData>>}
    */
-   async getOrderDoc(orderID) {
+  async getOrderDoc(orderID) {
     return db
       .collection('orders')
       .doc(orderID);

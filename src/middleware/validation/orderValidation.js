@@ -1,8 +1,9 @@
-const { check, validationResult } = require('express-validator');
 import { uid as uuid } from 'uid';
-import { Validation } from '../../utils/errors/Validation';
+import Validation from '../../utils/errors/Validation';
 
-export const orderValidation = {
+const { check, validationResult } = require('express-validator');
+
+const orderValidation = {
   /**
    * Checks for validation result, returns next if successful
    *
@@ -13,12 +14,16 @@ export const orderValidation = {
    * @returns next
    */
   createValidationResult: (req, res, next) => {
-    const { title, bookingDate, address, customer, uid } = req.body;
+    const {
+      title, bookingDate, address, customer, uid
+    } = req.body;
     const result = validationResult(req);
 
     if (!result.isEmpty()) return next(new Validation(result.array()));
 
-    req.body = { title, bookingDate, address, customer, uid: uid || uuid(21) }
+    req.body = {
+      title, bookingDate, address, customer, uid: uid || uuid(21)
+    };
 
     return next();
   },
@@ -52,7 +57,7 @@ export const orderValidation = {
 
     if (!result.isEmpty()) return next(new Validation(result.array()));
 
-    req.body = { title, bookingDate }
+    req.body = { title, bookingDate };
 
     return next();
   },
@@ -66,3 +71,5 @@ export const orderValidation = {
       .withMessage('Invalid booking date')
   ],
 };
+
+export default orderValidation;

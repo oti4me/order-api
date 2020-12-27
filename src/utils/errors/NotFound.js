@@ -1,6 +1,6 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-export class NotFound extends Error {
+export default class NotFound extends Error {
   /**
    * Constructor for NotFound
    *

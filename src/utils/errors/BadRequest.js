@@ -1,6 +1,6 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-export class BadRequest extends Error {
+export default class BadRequest extends Error {
   /**
    * Constructor for BadRequest
    *
