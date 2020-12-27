@@ -1,4 +1,4 @@
-[![Build]()](https://github.com/oti4me/order-api/workflows/Test/badge.svg)
+[![Build](https://github.com/oti4me/order-api/workflows/Test/badge.svg)](https://github.com/oti4me/order-api/actions?query=workflow%3ATest)
 [![Maintainability](https://api.codeclimate.com/v1/badges/0e435a5f1ac834bc670d/maintainability)](https://codeclimate.com/github/oti4me/order-api/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/0e435a5f1ac834bc670d/test_coverage)](https://codeclimate.com/github/oti4me/order-api/test_coverage)
 # Order API

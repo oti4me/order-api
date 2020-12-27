@@ -6,7 +6,6 @@ services:
       dockerfile: ./.cloud/docker/Dockerfile
     container_name: order_api
     environment:
-      DB_CONNECTION: '${DB_CONNECTION}'
       API_KEY: '${API_KEY}'
       AUTH_DOMAIN: '${AUTH_DOMAIN}'
       DATABASE_URL: '${DATABASE_URL}'
