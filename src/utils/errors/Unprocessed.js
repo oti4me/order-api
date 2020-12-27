@@ -1,6 +1,6 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-export class Unprocessed extends Error {
+export default class Unprocessed extends Error {
   /**
    * Constructor for Unprocessed
    *

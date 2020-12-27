@@ -1,14 +1,7 @@
-import orderRepo  from '../repositories/OrderRepository';
+import orderRepo from '../repositories/OrderRepository';
 import { ok, created } from '../helpers/response';
 
-export class OrdersController {
-  /**
-   * Creates an instance of OrdersController.
-   *
-   * @memberOf OrdersController
-   */
-  constructor() {}
-
+export default class OrdersController {
   /**
    * Gets all orders in the collection
    *
@@ -20,9 +13,9 @@ export class OrdersController {
    */
   async all(request, response, next) {
     const [orders, error] = await orderRepo.getAll();
-    if(error) return next(error);
+    if (error) return next(error);
 
-    ok(response, { data: orders});
+    return ok(response, { data: orders });
   }
 
   /**
@@ -36,9 +29,9 @@ export class OrdersController {
    */
   async add(request, response, next) {
     const [order, error] = await orderRepo.addOrder(request.body);
-    if(error) return next(error);
+    if (error) return next(error);
 
-    created(response, { ...order });
+    return created(response, { ...order });
   }
 
   /**
@@ -52,9 +45,9 @@ export class OrdersController {
    */
   async one(request, response, next) {
     const [order, error] = await orderRepo.getOne(request.params.id);
-    if(error) return next(error);
+    if (error) return next(error);
 
-    ok(response, { ...order });
+    return ok(response, { ...order });
   }
 
   /**
@@ -68,9 +61,9 @@ export class OrdersController {
    */
   async update(request, response, next) {
     const [order, error] = await orderRepo.updateOrder(request);
-    if(error) return next(error);
+    if (error) return next(error);
 
-    ok(response, { ...order });
+    return ok(response, { ...order });
   }
 
   /**
@@ -84,8 +77,8 @@ export class OrdersController {
    */
   async delete({ params }, response, next) {
     const [order, error] = await orderRepo.deleteOrder(params.id);
-    if(error) return next(error);
+    if (error) return next(error);
 
-    ok(response, { ...order });
+    return ok(response, { ...order });
   }
 }

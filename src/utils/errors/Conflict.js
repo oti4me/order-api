@@ -1,6 +1,6 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-export class Conflict extends Error {
+export default class Conflict extends Error {
   /**
    * Constructor for Conflict
    *

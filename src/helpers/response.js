@@ -10,9 +10,7 @@ const { OK, CREATED } = StatusCodes;
  *
  * @return Response
  */
-export const ok = (res, body = {}) => {
-  return res.status(OK).json(body);
-};
+export const ok = (res, body = {}) => res.status(OK).json(body);
 
 /**
  * Returns a json response with status code 201 and a response body

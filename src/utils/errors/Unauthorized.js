@@ -1,6 +1,6 @@
 import { StatusCodes, getReasonPhrase } from 'http-status-codes';
 
-export class unauthorized extends Error {
+export default class unauthorized extends Error {
   /**
    * Constructor for unauthorized
    *

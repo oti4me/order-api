@@ -1,5 +1,3 @@
-import { Request, Response } from 'express';
-
 /**
  * Returns a not found 404 json response
  *
@@ -24,8 +22,8 @@ export const notFoundError = (req, res, next) => {
 export const errorHandler = (err, req, res, next) => {
   let statusCode;
 
-  if (err['statusCode']) {
-    statusCode = err['statusCode'];
+  if (err.statusCode) {
+    statusCode = err.statusCode;
   } else if (res.statusCode && res.statusCode === 200) {
     statusCode = 500;
   } else {
@@ -34,7 +32,7 @@ export const errorHandler = (err, req, res, next) => {
   res.status(statusCode);
   res.json({
     message: err.message,
-    body: statusCode === 422 ? err['fields'] : '',
+    body: statusCode === 422 ? err.fields : '',
     stack: process.env.NODE_ENV === 'production' ? '' : err.stack,
   });
 };

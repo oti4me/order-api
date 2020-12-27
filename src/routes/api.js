@@ -1,13 +1,12 @@
 import { Router } from 'express';
-import { firebase } from '../config/firebase';
 import { ok } from '../helpers/response';
-import order from './order'
+import order from './order';
 
 const router = Router();
 
 router.use('/orders', order);
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   ok(res, {
     message: 'Welcome to the API for this great app.',
   });
