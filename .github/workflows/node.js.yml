@@ -10,7 +10,6 @@ on:
 
 jobs:
   test:
-
     runs-on: ubuntu-latest
     env:
       API_KEY: ${{ secrets.API_KEY }}
@@ -29,6 +28,7 @@ jobs:
       TOKEN_URI: ${{ secrets.TOKEN_URI }}
       AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}
       CLIENT_X509_CERT_URL: ${{ secrets.CLIENT_X509_CERT_URL }}
+      CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
 
     strategy:
       matrix:
@@ -41,4 +41,26 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
+    - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - run: chmod +x ./cc-test-reporter
+    - run: ./cc-test-reporter before-build
     - run: npm test
+    - run: ./cc-test-reporter format-coverage -t lcov --prefix tmp/
+    - run: ./cc-test-reporter after-build -t lcov --exit-code $?
+#  coverage:
+#    needs: [ test ]
+#    name: coverage
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@master
+#      - uses: actions/setup-node@master
+#        with:
+#          node-version: '12'
+#      - run: npm install -g yarn
+#      - run: yarn install
+#      - run: yarn build
+#      - uses: paambaati/codeclimate-action@v2.2.4
+#        env:
+#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+#        with:
+#          coverageCommand: yarn coverage
