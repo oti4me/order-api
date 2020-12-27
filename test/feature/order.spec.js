@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import { describe } from 'mocha';
 import app from '../../src/server';
-import { order } from '../mockData/order';
+import { order, token } from '../mockData/order';
 
 const request = supertest(app);
 
@@ -11,6 +11,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 201 success status and a object of the created order', async () => {
       const { body } = await request
         .post('/api/v1/orders')
+        .set({ authorization: token })
         .send(order)
         .expect(201);
 
@@ -21,17 +22,27 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 422 error for missing required field', async () => {
       const { body } = await request
         .post('/api/v1/orders')
+        .set({ authorization: token })
         .send({ ...order, title: '' })
         .expect(422);
 
       expect(body.message).to.equal('Request validation failed');
       expect(body.body[0].msg).to.equal('Title is required');
     });
+    it('should return a 401 error for missing auth token', async () => {
+      const { body } = await request
+        .post('/api/v1/orders')
+        .send({ ...order, title: '' })
+        .expect(401);
+
+      expect(body.message).to.equal('Not authorised to view this resource');
+    });
   });
   describe('Orders GET: /api/v1/orders', () => {
     it('should return a 200 success status and a array of orders', async () => {
       const { body } = await request
         .get('/api/v1/orders')
+        .set({ authorization: token })
         .expect(200);
 
       expect(body.data[0]).to.haveOwnProperty('bookingDate');
@@ -42,6 +53,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 200 success status and an object of the provided ID', async () => {
       const { body } = await request
         .get(`/api/v1/orders/${order.uid}`)
+        .set({ authorization: token })
         .expect(200);
 
       expect(body.uid).to.equal(order.uid);
@@ -51,6 +63,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 404 if the provided ID does not match an order ID in the collection', async () => {
       const { body } = await request
         .get('/api/v1/orders/thisisaninvalidorderid')
+        .set({ authorization: token })
         .expect(404);
 
       expect(body.message).to.equal('Order with id \'thisisaninvalidorderid\' not found');
@@ -64,6 +77,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 200 success status and an object of the provided ID', async () => {
       const { body } = await request
         .put(`/api/v1/orders/${order.uid}`)
+        .set({ authorization: token })
         .send(updateValue)
         .expect(200);
 
@@ -73,6 +87,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 404 if the provided ID does not match an order ID in the collection', async () => {
       const { body } = await request
         .put('/api/v1/orders/thisisaninvalidorderid')
+        .set({ authorization: token })
         .send(updateValue)
         .expect(404);
 
@@ -81,6 +96,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 422 error for missing required field', async () => {
       const { body } = await request
         .put(`/api/v1/orders/${order.uid}`)
+        .set({ authorization: token })
         .send({ ...order, title: '' })
         .expect(422);
 
@@ -92,6 +108,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 200 success status on delete of the order with the provided ID', async () => {
       const { body } = await request
         .delete(`/api/v1/orders/${order.uid}`)
+        .set({ authorization: token })
         .expect(200);
 
       expect(body.orderId).to.equal(order.uid);
@@ -99,6 +116,7 @@ describe('Orders Controller: /api/v1/orders', () => {
     it('should return a 404 if the provided ID does not match an order ID in the collection', async () => {
       const { body } = await request
         .delete(`/api/v1/orders/${order.uid}`)
+        .set({ authorization: token })
         .expect(404);
 
       expect(body.message).to.equal(`Order with id '${order.uid}' not found`);
