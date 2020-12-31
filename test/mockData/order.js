@@ -28,7 +28,7 @@ export const getToken = async () => {
       returnSecureToken: true
     });
     return data.idToken;
-  } catch (error) {
-    return console.log(error);
+  } catch ({ response }) {
+    return console.log(response.data);
   }
 };
