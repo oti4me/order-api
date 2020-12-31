@@ -22,14 +22,13 @@ export const order = {
 
 export const getToken = async () => {
   try {
-    const customToken = await firebase.auth().createCustomToken(uuid(21));
+    const customToken = await firebase.auth().createCustomToken(process.env.UID);
     const { data } = await axios.post(`https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyCustomToken?key=${process.env.API_KEY}`, {
       token: customToken,
       returnSecureToken: true
     });
     return data.idToken;
   } catch ({ response }) {
-    console.log(response.data.error.errors[0]);
-    return console.log(response.data.error);
+    return console.log(response.data);
   }
 };
