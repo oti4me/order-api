@@ -29,7 +29,7 @@ jobs:
       AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}
       CLIENT_X509_CERT_URL: ${{ secrets.CLIENT_X509_CERT_URL }}
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      UUID: ${{ secrets.UID }}
+      UID: ${{ secrets.UID }}
 
     strategy:
       matrix:
