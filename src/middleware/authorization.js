@@ -13,9 +13,8 @@ import Unauthorised from '../utils/errors/Unauthorized';
 const authorize = async (req, res, next) => {
   const { authorization } = req.headers;
   if (authorization) {
-    const [_, token] = authorization.split(' ');
     return firebase.auth()
-      .verifyIdToken(token)
+      .verifyIdToken(authorization)
       .then((user) => {
         req.user = user;
         return next();

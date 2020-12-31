@@ -2,9 +2,14 @@ import { expect } from 'chai';
 import supertest from 'supertest';
 import { describe } from 'mocha';
 import app from '../../src/server';
-import { order, token } from '../mockData/order';
+import { getToken, order } from '../mockData/order';
 
 const request = supertest(app);
+let token = '';
+
+before(async () => {
+  token = await getToken();
+});
 
 describe('Orders Controller: /api/v1/orders', () => {
   describe('Orders POST: /api/v1/orders', () => {

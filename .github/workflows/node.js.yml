@@ -29,6 +29,7 @@ jobs:
       AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.AUTH_PROVIDER_X509_CERT_URL }}
       CLIENT_X509_CERT_URL: ${{ secrets.CLIENT_X509_CERT_URL }}
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      UID: ${{ secrets.UID }}
 
     strategy:
       matrix:
@@ -47,20 +48,4 @@ jobs:
     - run: npm test
     - run: ./cc-test-reporter format-coverage -t lcov --prefix tmp/
     - run: ./cc-test-reporter after-build -t lcov --exit-code $?
-#  coverage:
-#    needs: [ test ]
-#    name: coverage
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@master
-#      - uses: actions/setup-node@master
-#        with:
-#          node-version: '12'
-#      - run: npm install -g yarn
-#      - run: yarn install
-#      - run: yarn build
-#      - uses: paambaati/codeclimate-action@v2.2.4
-#        env:
-#          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-#        with:
-#          coverageCommand: yarn coverage
+
