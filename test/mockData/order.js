@@ -29,7 +29,7 @@ export const getToken = async () => {
     });
     return data.idToken;
   } catch ({ response }) {
-    console.log(response.data.errors);
-    return console.log(response.data);
+    console.log(response.data.error.errors[0]);
+    return console.log(response.data.error);
   }
 };
